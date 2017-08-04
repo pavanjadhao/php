@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
                 move_uploaded_file($_FILES["photo"]["tmp_name"], "upload/" . $_FILES["photo"]["name"]);
                 echo "Your file was uploaded successfully.";
-            } 
+            }
         } else{
             echo "Error: There was a problem uploading your file. Please try again."; 
         }

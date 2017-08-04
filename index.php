@@ -21,13 +21,47 @@
   </head>
   <body>
 <div class="container">
-    <form action="upload-manager.php" method="post" enctype="multipart/form-data">
-        <h2>Upload File</h2>
-        <label for="fileSelect">Filename:</label>
-        <input type="file" name="photo" id="fileSelect">
-        <input type="submit" name="submit" value="Upload">
-        <p><strong>Note:</strong> Only .jpg, .jpeg, .gif, .png formats allowed to a max size of 5 MB.</p>
-    </form>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">WaLLS</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+</div>
+
+<div class="container" style="margin-top:70px;">
+  <?php 
+  //Array containing simple file names
+    $images = array('1.jpg','2.jpg','3.jpg');
+    
+  //loop through array to creating image gallery
+  echo '<div class="row">';
+    foreach($images as $image) {
+      echo '<div class="col-sm-6 col-md-4"><div class="thumbnail">';
+        echo '<img src="source/' . $image . '"' . 'alt="' . pathinfo($image,PATHINFO_FILENAME)  . '">';
+        echo '<a href="download.php?file=' . urlencode($image) . '"' . 'class="btn btn-primary"' . '"role="button">Download</a>';
+      echo '</div></div>';
+    }
+    echo '</div>';
+?>
 </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
