@@ -31,14 +31,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">WaLLS</a>
+                <a class="navbar-brand" href="index.html">PHP PRO</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
+                    <!-- <li>
                         <a href="about.html">About</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -49,19 +49,14 @@
 
 <div class="container" style="margin-top:70px;">
   <?php 
-  //Array containing simple file names
-    $images = array('1.jpg','2.jpg','3.jpg');
-    
-  //loop through array to creating image gallery
-  echo '<div class="row">';
-    foreach($images as $image) {
-      echo '<div class="col-sm-6 col-md-4"><div class="thumbnail">';
-        echo '<img src="source/' . $image . '"' . 'alt="' . pathinfo($image,PATHINFO_FILENAME)  . '">';
-        echo '<a href="download.php?file=' . urlencode($image) . '"' . 'class="btn btn-primary"' . '"role="button">Download</a>';
-      echo '</div></div>';
+    // setcookie("username","Pavan Jadhao",time()+30*24*60*60);
+    // echo $_COOKIE["username"];
+    if(isset($_COOKIE["username"])) {
+      print_r($_COOKIE);
+    }else {
+      echo "Welcome Guest";
     }
-    echo '</div>';
-?>
+  ?>
 </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
