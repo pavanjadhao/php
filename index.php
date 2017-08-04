@@ -20,21 +20,54 @@
     <![endif]-->
   </head>
   <body>
-
 <?php
-    $file = 'new.txt';
-    $newfile = 'test/new.txt';
-
-//Check existence of file
-if (file_exists($file)) {
-    if (copy($file, $newfile)) {
-        echo '<div class="alert alert-success" role="alert">File Copied Successfully.</div>';
+//Display Files in directories
+function outputFiles($path)
+{
+    //Check path is exist and is directory or not
+    if (file_exists($path) && is_dir($path)) {
+        //scanning for files in directory
+        $result = scandir($path);
+        //Filter out current "." and parent ".." directories
+        $files = array_diff($result, array('.','..'));
+        if (count($files) > 0) {
+            //Disply file names
+            // Loop through retuned array
+            echo '<ul class="list-group">';
+            foreach ($files as $file) {
+                if (is_file("$path/$file")) {
+                    // Display filename
+                    echo '<li class="list-group-item">' . $file . '</li>';
+                    
+                } elseif (is_dir("$path/$file")) {
+                    // Recursively call the function if directories found
+                    outputFiles("$path/$file");
+                }else {
+                    echo '<div class="panel panel-default">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">ERROR</h3>
+                    </div>
+                    <div class="panel-body">
+                    No files found in the directory.
+                    </div>
+                    </div>';
+                }
+                echo "</ul>";
+            }
+        }
     } else {
-        echo '<div class="alert alert-danger" role="alert">ERROR : Coping File.</div>';
+        echo '<div class="panel panel-default">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">ERROR</h3>
+                    </div>
+                    <div class="panel-body">
+                    The directory does not exist.
+                    </div>
+                    </div>';
     }
-} else {
-    echo '<div class="alert alert-danger" role="alert">File Not Exist.</div>';
 }
+
+outputFiles('Car');
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
