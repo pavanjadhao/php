@@ -21,53 +21,10 @@
   </head>
   <body>
 <?php
-//Display Files in directories
-function outputFiles($path)
-{
-    //Check path is exist and is directory or not
-    if (file_exists($path) && is_dir($path)) {
-        //scanning for files in directory
-        $result = scandir($path);
-        //Filter out current "." and parent ".." directories
-        $files = array_diff($result, array('.','..'));
-        if (count($files) > 0) {
-            //Disply file names
-            // Loop through retuned array
-            echo '<ul class="list-group">';
-            foreach ($files as $file) {
-                if (is_file("$path/$file")) {
-                    // Display filename
-                    echo '<li class="list-group-item">' . $file . '</li>';
-                    
-                } elseif (is_dir("$path/$file")) {
-                    // Recursively call the function if directories found
-                    outputFiles("$path/$file");
-                }else {
-                    echo '<div class="panel panel-default">
-                    <div class="panel-heading">
-                    <h3 class="panel-title">ERROR</h3>
-                    </div>
-                    <div class="panel-body">
-                    No files found in the directory.
-                    </div>
-                    </div>';
-                }
-                echo "</ul>";
-            }
-        }
-    } else {
-        echo '<div class="panel panel-default">
-                    <div class="panel-heading">
-                    <h3 class="panel-title">ERROR</h3>
-                    </div>
-                    <div class="panel-body">
-                    The directory does not exist.
-                    </div>
-                    </div>';
+//Scan files of specified extension
+    foreach(glob("Car/AC-DC/*.mp4") as $file) {
+        echo basename($file) . '  Size : ' . filesize($file)/1024/1024 . '(byte)' . '<br><hr>';
     }
-}
-
-outputFiles('Car');
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
