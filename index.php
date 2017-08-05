@@ -48,15 +48,7 @@
 </div>
 
 <div class="container" style="margin-top:70px;">
-  <?php 
-    // setcookie("username","Pavan Jadhao",time()+30*24*60*60);
-    // echo $_COOKIE["username"];
-    if(isset($_COOKIE["username"])) {
-      print_r($_COOKIE);
-    }else {
-      echo "Welcome Guest";
-    }
-  ?>
+    <a href="mail.php">Click</a>
 </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
