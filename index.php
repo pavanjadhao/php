@@ -1,25 +1,19 @@
 <?php
-// Extending the Exception class
-class EmptyEmailException extends Exception {}
-class InvalidEmailException extends Exception {}
- 
-$email = "someuser@example.com";
- 
-try{
-    // Throw exception if email is empty
-    if($email == ""){
-        throw new EmptyEmailException("<p>Please enter your E-mail address!</p>");
-    }
+function handleUncaughtException($e){
+    // Display generic error message to the user
+    echo "Opps! Something went wrong. Please try again, or contact us if the problem persists.";
     
-    // Throw exception if email is not valid
-    if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {           
-        throw new InvalidEmailException("<p><b>$email</b> is not a valid E-mail address!</p>");
-    }
+    // Construct the error string
+    $error = "Uncaught Exception: " . $message = date("Y-m-d H:i:s - ");
+    $error .= $e->getMessage() . " in file " . $e->getFile() . " on line " . $e->getLine() . "\n";
     
-    // Display success message if email is valid
-    echo "<p>SUCCESS: Email validation successful.</p>";
-} catch(EmptyEmailException $e){
-    echo $e->getMessage();
-} catch(InvalidEmailException $e){
-    echo $e->getMessage();
+    // Log details of error in a file
+    error_log($error, 3, "logs/app_errors.log");
 }
+ 
+// Register custom exception handler
+set_exception_handler("handleUncaughtException");
+ 
+// Throw an exception
+throw new Exception("Testing Exception!");
+?>
