@@ -1,21 +1,34 @@
 <?php
-    //Function to calculate division of two numbers
-    function calcDivision($dividend, $divisor){
-        if($divisor == 0){
-            trigger_error("calcDivision(): The divisor cannot be zero", E_USER_WARNING);
-            return false;
-        } else{
-            return($dividend / $divisor);
-        }
+//turn off default error reporting
+    error_reporting(0);
+try{
+//file for performing operations
+    $file = 'new.txt';
+
+//opening file
+    $handle = fopen($file,'r');
+
+    //handling exceptions if occurs
+    if(!$handle) {
+        throw new exception("Can't open file", 5);
     }
-    function customError($errno, $errstr, $errfile, $errline, $errcontext){
-        $message = date("Y-m-d H:i:s - ");
-        $message .= "Error: [" . $errno ."], " . "$errstr in $errfile on line $errline, ";
-        $message .= "Variables:" . print_r($errcontext, true) . "\r\n";
-        
-        error_log($message, 3, "logs/app_errors.log");
-        die("There was a problem, please try again.");
+
+    //here attempting to open file
+    $content = fread($handle,filesize($file));
+    if(!$content) {
+        throw new exception('Could not open file', 10);
     }
-    set_error_handler("customError");
-    echo calcDivision(10,0);
-    // echo "This will never be printed.";
+
+    echo $content;
+
+    //closing file
+    fclose($handle);
+} catch(Exception $e) {
+    echo '<h1>Caught Exceptions.</h1>';
+    echo '<p> Error message : ' . $e->getMessage() . '</p>';
+    echo '<p> File : ' . $e -> getFile() . '</p>';
+    echo '<p> Line : ' . $e -> getLine() . '</p>';
+    echo '<p> Code : ' . $e -> getCode() . '</p>';
+    echo '<p> Trace : ' . $e -> getTraceAsString() . '</p>';
+    
+}
