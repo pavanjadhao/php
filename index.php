@@ -1,34 +1,25 @@
 <?php
-//turn off default error reporting
-    error_reporting(0);
+// Extending the Exception class
+class EmptyEmailException extends Exception {}
+class InvalidEmailException extends Exception {}
+ 
+$email = "someuser@example.com";
+ 
 try{
-//file for performing operations
-    $file = 'new.txt';
-
-//opening file
-    $handle = fopen($file,'r');
-
-    //handling exceptions if occurs
-    if(!$handle) {
-        throw new exception("Can't open file", 5);
+    // Throw exception if email is empty
+    if($email == ""){
+        throw new EmptyEmailException("<p>Please enter your E-mail address!</p>");
     }
-
-    //here attempting to open file
-    $content = fread($handle,filesize($file));
-    if(!$content) {
-        throw new exception('Could not open file', 10);
-    }
-
-    echo $content;
-
-    //closing file
-    fclose($handle);
-} catch(Exception $e) {
-    echo '<h1>Caught Exceptions.</h1>';
-    echo '<p> Error message : ' . $e->getMessage() . '</p>';
-    echo '<p> File : ' . $e -> getFile() . '</p>';
-    echo '<p> Line : ' . $e -> getLine() . '</p>';
-    echo '<p> Code : ' . $e -> getCode() . '</p>';
-    echo '<p> Trace : ' . $e -> getTraceAsString() . '</p>';
     
+    // Throw exception if email is not valid
+    if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE) {           
+        throw new InvalidEmailException("<p><b>$email</b> is not a valid E-mail address!</p>");
+    }
+    
+    // Display success message if email is valid
+    echo "<p>SUCCESS: Email validation successful.</p>";
+} catch(EmptyEmailException $e){
+    echo $e->getMessage();
+} catch(InvalidEmailException $e){
+    echo $e->getMessage();
 }
